@@ -4,15 +4,12 @@ const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 const PORT = 3000;
 
-// Configuración de MongoDB
 const url = 'mongodb://localhost:27017';
 const client = new MongoClient(url);
 
-// Middleware
 app.use(express.json());
 app.use(express.static('public'));
 
-// Conectar a MongoDB
 let db;
 client.connect()
   .then(() => {
@@ -21,7 +18,6 @@ client.connect()
   })
   .catch(err => console.error('Error conectando a MongoDB:', err));
 
-// Ruta principal - HTML
 app.get('/', (req, res) => {
   res.send(`
 <!DOCTYPE html>
@@ -316,7 +312,7 @@ app.get('/', (req, res) => {
             <button class="tab" onclick="switchTab('delete')">🗑️ Eliminar</button>
         </div>
         
-        <!-- TAB: READ -->
+        <!--  READ -->
         <div id="tab-read" class="tab-content active">
             <div class="info-box">
                 💡 Deja los campos vacíos para traer todos los documentos
@@ -354,7 +350,7 @@ app.get('/', (req, res) => {
             </div>
         </div>
         
-        <!-- TAB: CREATE -->
+        <!-- CREATE -->
         <div id="tab-create" class="tab-content">
             <div class="schema-box">
                 <h3>📋 Campos de la Colección "usuarios"</h3>
@@ -424,7 +420,7 @@ app.get('/', (req, res) => {
             </div>
         </div>
         
-        <!-- TAB: UPDATE -->
+        <!-- UPDATE -->
         <div id="tab-update" class="tab-content">
             <div class="info-box">
                 ✏️ Primero busca el documento que quieres actualizar, luego indica qué campos modificar
@@ -459,7 +455,7 @@ app.get('/', (req, res) => {
             </div>
         </div>
         
-        <!-- TAB: DELETE -->
+        <!-- DELETE -->
         <div id="tab-delete" class="tab-content">
             <div class="warning-box">
                 ⚠️ <strong>Cuidado:</strong> Esta operación no se puede deshacer
@@ -527,7 +523,7 @@ app.get('/', (req, res) => {
             return valor;
         }
         
-        // ========== READ ==========
+        //  READ
         async function buscarSimple() {
             const dbName = document.getElementById('dbName').value;
             const collection = document.getElementById('collection').value;
@@ -620,7 +616,7 @@ app.get('/', (req, res) => {
             }
         }
         
-        // ========== CREATE ==========
+        // CREATE
         async function crearDocumento() {
             const dbName = document.getElementById('dbName').value;
             const collection = document.getElementById('collection').value;
@@ -669,7 +665,7 @@ app.get('/', (req, res) => {
             }
         }
         
-        // ========== UPDATE ==========
+        // UPDATE
         async function actualizarDocumento() {
             const dbName = document.getElementById('dbName').value;
             const collection = document.getElementById('collection').value;
@@ -722,7 +718,7 @@ app.get('/', (req, res) => {
             }
         }
         
-        // ========== DELETE ==========
+        // DELETE
         async function eliminarDocumento() {
             const dbName = document.getElementById('dbName').value;
             const collection = document.getElementById('collection').value;
@@ -763,7 +759,7 @@ app.get('/', (req, res) => {
             }
         }
         
-        // ========== UI HELPERS ==========
+        // funciones auxiliares
         function mostrarResultados(docs, count) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = \`
@@ -809,7 +805,7 @@ app.get('/', (req, res) => {
   `);
 });
 
-// ========== API ENDPOINTS ==========
+//  ENDPOINTS
 
 // READ: Consultar documentos
 app.post('/api/query', async (req, res) => {
